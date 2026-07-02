@@ -5,7 +5,7 @@
 @section('content')
     <div class="flex min-h-[calc(100vh-78px)] animate-fade-in flex-col items-center justify-center px-4 py-10 text-center">
         <div class="relative mb-6 h-[180px] w-[200px]">
-            <svg width="200" height="180" viewBox="0 0 200 180" fill="none">
+            {{-- <svg width="200" height="180" viewBox="0 0 200 180" fill="none">
                 <circle cx="100" cy="100" r="65" fill="#fce7f3" opacity="0.6" />
                 <rect x="52" y="85" width="96" height="65" rx="8" fill="#e2e8f0" />
                 <rect x="52" y="95" width="96" height="14" fill="#cbd5e1" />
@@ -25,13 +25,26 @@
                 <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24">
                     <path d="M18 6L6 18M6 6l12 12" stroke="#fff" stroke-width="3" stroke-linecap="round" />
                 </svg>
-            </div>
+            </div> --}}
+            <img src="{{ asset('images/payment-failed.svg') }}" alt="Payment Failed" class="h-full w-full object-contain">
         </div>
-        <div class="mb-2.5 text-[22px] font-extrabold text-[#1f2937]">Payment Failed</div>
-        <div class="mb-7 max-w-[300px] text-sm leading-[1.6] text-[#6b7280]">Your payment could not be
+        <div class="mb-2.5 text-[22px] font-extrabold text-[#1A1A1A]"
+            style="font-style: Semi Bold;font-size: 18px;leading-trim: NONE;line-height: 16px;letter-spacing: 0%;">
+            Payment Failed</div>
+        <div class="mb-7 max-w-[300px] text-sm leading-[1.6] text-[#4F4F4F]"
+            style="font-family: Inter;
+font-weight: 400;
+font-style: Regular;
+font-size: 14px;
+leading-trim: NONE;
+line-height: 24px;
+letter-spacing: 0%;
+text-align: center;
+">
+            Your payment could not be
             processed.<br />Please try again later.</div>
         <a href="{{ route('home') }}"
-            class="flex items-center gap-2 rounded-lg bg-[#1a237e] px-7 py-3 text-sm font-semibold text-white">
+            class="flex items-center gap-2 rounded-lg bg-[#050273] px-7 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#03015a]">
             Go Back to Property Search
             <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24">
                 <path d="M5 12h14M13 6l6 6-6 6" stroke="#fff" stroke-width="2" stroke-linecap="round"

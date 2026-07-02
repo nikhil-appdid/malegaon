@@ -7,10 +7,10 @@
         <x-nil-banner class="mb-6" />
 
         {{-- Main card --}}
-        <div class="overflow-hidden rounded-[14px] border-[1.5px] border-[#c5cae9] bg-white pb-8">
+        <div
+            class="overflow-hidden rounded-[14px] border border-[#e5e7eb] bg-white pb-8 shadow-[0px_4px_16px_0px_#0000001F]">
             {{-- Hero banner --}}
-            <div
-                class="flex items-center justify-between bg-[linear-gradient(135deg,#1a237e_0%,#283593_60%,#1565c0_100%)] px-7 py-[22px]">
+            <div class="flex items-center justify-between bg-[#050273] px-7 py-[22px]">
                 <div class="flex items-center gap-4">
                     <div
                         class="flex h-13 w-13 items-center justify-center rounded-full border-2 border-white/30 bg-white/15">
@@ -26,8 +26,9 @@
                             property tax.</div>
                     </div>
                 </div>
-                <x-skyline class="hidden sm:block" :width="160" :height="60" stroke="#fff" strokeWidth="1.2"
-                    style="opacity:.35" />
+                {{-- <x-skyline class="hidden sm:block" :width="160" :height="60" stroke="#fff" strokeWidth="1.2"
+                    style="opacity:.35" /> --}}
+                <img src="{{ asset('images/property.svg') }}" alt="">
             </div>
 
             {{-- Search form --}}
@@ -37,7 +38,8 @@
                         <label for="property_number" class="text-sm font-semibold text-[#1f2937]">Property Number</label>
                         <span class="ml-0.5 text-[#e53935]">*</span>
                     </div>
-                    <div class="flex items-center overflow-hidden rounded-lg border-[1.5px] border-[#d1d5db] bg-white">
+                    <div
+                        class="flex items-center overflow-hidden rounded-lg border border-[#d1d5db] bg-white focus-within:border-[#050273] focus-within:ring-2 focus-within:ring-[#0502731A]">
                         <div class="flex h-12 items-center border-r border-[#e5e7eb] px-3.5">
                             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24">
                                 <path d="M3 12L12 3l9 9" stroke="#6b7280" stroke-width="2" stroke-linecap="round" />
@@ -54,11 +56,12 @@
 
                     <div class="mt-7 flex justify-center">
                         <button type="submit"
-                            class="flex items-center gap-2 rounded-lg bg-[#1a237e] px-10 py-3.5 text-[15px] font-semibold text-white transition-colors hover:bg-[#283593]">
+                            class="flex items-center gap-2 rounded-lg bg-[#050273] px-10 py-3.5 text-[15px] font-semibold text-white transition-colors hover:bg-[#03015a]">
                             <svg class="h-[18px] w-[18px]" fill="none" viewBox="0 0 24 24">
                                 <circle cx="11" cy="11" r="8" stroke="#fff" stroke-width="2" />
                                 <path d="M21 21l-4.35-4.35" stroke="#fff" stroke-width="2" stroke-linecap="round" />
                             </svg>
+
                             Search Property
                         </button>
                     </div>

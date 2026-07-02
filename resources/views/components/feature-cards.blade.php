@@ -3,8 +3,8 @@
 @php
     $cards = [
         [
-            'bg' => '#e8edf8',
-            'color' => '#1a237e',
+            'bg' => '#0502731A',
+            'color' => '#050273',
             'title' => 'Secure & Trusted',
             'body' => 'Your data is safe with 256-bit encryption.',
             'icon' =>
