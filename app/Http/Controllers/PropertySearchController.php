@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BillData;
+use App\Models\PropertyMaster;
 use App\Services\PropertyLookupService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -16,12 +18,16 @@ class PropertySearchController extends Controller
 
     public function search(Request $request): RedirectResponse
     {
-        $propertyNumber = trim((string) $request->query('property_number'));
+        //PropertyNo
+        //NP3NP4B1143
+        $request->validate([
+            'property_number' => 'required',
+        ]);
 
-        if (mb_strlen($propertyNumber) < 3) {
-            $propertyNumber = PropertyLookupService::DEFAULT_PROPERTY_NUMBER;
-        }
+        // $property = PropertyMaster::where('PropertyNo', $request->input('property_number'))->get();
+        // dd(array_keys($property->getAttributes()));
+        // dd($property);
 
-        return redirect()->route('property.show', ['propertyNumber' => mb_strtoupper($propertyNumber)]);
+        return redirect()->route('property.show', ['propertyNumber' => mb_strtoupper($request->input('property_number'))]);
     }
 }
