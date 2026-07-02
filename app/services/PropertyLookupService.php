@@ -2,36 +2,69 @@
 
 namespace App\Services;
 
+use App\Models\BillData;
+use App\Models\PaymentData;
+
 class PropertyLookupService
 {
-    public const DEFAULT_PROPERTY_NUMBER = '01AI013944200';
+    private const ACTIVE_BILL_PERIOD = '2025-2026';
 
     /**
-     * Look up a property by number.
-     *
-     * This is backed by mock data until the department's property records
-     * are wired up to a real data source. Any property number resolves to
-     * the same sample record so the payment flow can be exercised end to end.
+     * Look up a property's current active bill, owner, and address details.
      *
      * @return array<string, mixed>
      */
     public function find(string $propertyNumber): array
     {
+        $bill = BillData::with('property')
+            ->where('BillPeriod', self::ACTIVE_BILL_PERIOD)
+            ->where('BillStatus', 'Active')
+            ->where('PropertyNo', $propertyNumber)
+            ->firstOrFail();
+
+        $property = $bill->property;
+        $ownerName = trim("{$property->OwName} {$property->OwMiddleName} {$property->OwLastName}");
+
+        $receivedTillDate = (float) PaymentData::where('BillId', $bill->BillId)
+            ->where('PaymentStatus', 'Active')
+            ->sum('NetPaidAmount');
+
+        $billAmount = (float) $bill->GrandTotal;
+        $fine = (float) $bill->LatePaymentPenalty + (float) $bill->ArrearsLatePaymentPenalty;
+
+        // BillData only carries a Yes/No DiscountApplicable flag, not an
+        // amount — the real discount only exists once a payment records one
+        // (PaymentData.DiscountAmount), so there's nothing to show pre-payment.
+        $rebateAmount = 0.0;
+
+        $payableAmount = max($billAmount - $rebateAmount - $receivedTillDate, 0.0);
+
         return [
-            'property_number' => $propertyNumber !== '' ? $propertyNumber : self::DEFAULT_PROPERTY_NUMBER,
-            'owner_name' => 'VIJAYLAXMI RATAN WANKHEDE',
-            'prabhag_samiti' => 'Unit No. 1',
-            'zone' => '1',
-            'subcode' => '--',
-            'block' => 'UNIT NO.1',
-            'address' => 'REST SHOP SHIVAJI ROAD NR SHAHAD FATAK ULHASNAGAR 1',
-            'bill_number' => '2058571',
-            'bill_amount' => 17341.00,
-            'rebate_amount' => 139.00,
-            'fine' => 0.00,
-            'received_till_date' => 0.00,
-            'total_due' => 17341.00,
-            'payable_amount' => 17329.00,
+            'property_number' => $property->PropertyNo,
+            'owner_name' => $ownerName !== '' ? $ownerName : '--',
+            'prabhag_samiti' => $this->clean($property->PrabhagNo),
+            'zone' => $this->clean($property->WardName),
+            'subcode' => $this->clean($property->HissaNO),
+            'block' => $this->clean($property->PlotNo),
+            'address' => $this->clean($property->PropertyAddress),
+            'bill_number' => $bill->BillId,
+            'bill_amount' => $billAmount,
+            'rebate_amount' => $rebateAmount,
+            'fine' => $fine,
+            'received_till_date' => $receivedTillDate,
+            'total_due' => $billAmount,
+            'payable_amount' => $payableAmount,
         ];
+    }
+
+    /**
+     * The source database uses the literal string "-" (and sometimes an
+     * empty string) as its "no value" sentinel instead of null.
+     */
+    private function clean(?string $value): string
+    {
+        $value = trim((string) $value);
+
+        return in_array($value, ['', '-'], true) ? '--' : $value;
     }
 }

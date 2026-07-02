@@ -1,9 +1,14 @@
 <?php
 
+use App\Http\Controllers\DevDatabaseController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\PropertySearchController;
 use Illuminate\Support\Facades\Route;
+
+if (app()->isLocal()) {
+    Route::get('/dev/database', [DevDatabaseController::class, 'index'])->name('dev.database');
+}
 
 Route::get('/', [PropertySearchController::class, 'index'])->name('home');
 Route::get('/property/search', [PropertySearchController::class, 'search'])->name('property.search');

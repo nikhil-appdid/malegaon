@@ -7,8 +7,7 @@
         <x-nil-banner compact class="mb-5" />
 
         {{-- Compact search card --}}
-        <div
-            class="mb-5 rounded-xl border border-[#e5e7eb] bg-white px-5 py-4 shadow-[0px_4px_16px_0px_#0000001F]">
+        <div class="mb-5 rounded-xl border border-[#e5e7eb] bg-white px-5 py-4 shadow-[0px_4px_16px_0px_#0000001F]">
             <div class="mb-3.5 flex items-center justify-between"
                 style="border: 1px solid #F2F2F2;border-radius: 16px;padding: 9px;">
                 <div class="flex items-center gap-3">
@@ -61,8 +60,7 @@
         </div>
 
         {{-- Property details card --}}
-        <div
-            class="mb-6 overflow-hidden rounded-2xl border border-[#eef0f5] bg-white shadow-[0px_4px_16px_0px_#0000001F]">
+        <div class="mb-6 overflow-hidden rounded-2xl border border-[#eef0f5] bg-white shadow-[0px_4px_16px_0px_#0000001F]">
             <div class="px-4 pt-4">
                 <div class="mb-1 flex items-center gap-2.5 rounded-lg bg-[#0502731A] px-5 py-3.5">
                     <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24">
